@@ -23,12 +23,20 @@ public class UserRepository {
     }
     public List<UserModel> listAll(){
         List<UserModel> usuarios = new ArrayList<>();
-        usuarios.add(new UserModel("jojo","12345"));
-        usuarios.add(new UserModel("mateus","98765"));
+        usuarios.add(new UserModel(111, "jojo","12345"));
+        usuarios.add(new UserModel(222, "mateus","98765"));
         return usuarios;
     }
     public UserModel finById(Integer id){
         System.out.println(String.format("GET/id - Recebendo o id: %d para localizar um usuário", id));
-        return new UserModel("jojo","12345");
+        List<UserModel> usuarios = new ArrayList<>();
+        usuarios.add(new UserModel(111, "jojo","12345"));
+        usuarios.add(new UserModel(222, "mateus","98765"));
+        for (UserModel u : usuarios) {
+            if (u.getId().equals(id)) {
+                return u;
+            }
+        }
+        return null;
     }
 }
