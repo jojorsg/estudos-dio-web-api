@@ -1,5 +1,7 @@
 package jojo.web.api.repository;
 
+import jojo.web.api.handler.BusinessException;
+import jojo.web.api.handler.CampoObrigatorioException;
 import jojo.web.api.model.UserModel;
 import org.springframework.stereotype.Repository;
 
@@ -10,10 +12,26 @@ import java.util.List;
 public class UserRepository {
 
     public void save(UserModel usuario){
-        System.out.println("SAVE - Recebendo o usuário na camada de repositório");
+        if(usuario.getLogin()==null){
+            throw new CampoObrigatorioException("login");
+        }
+        if(usuario.getPassword()==null){
+            throw new CampoObrigatorioException("password");
+        }
+        if(usuario.getId()==null) {
+            System.out.println("SAVE - Recebendo o usuário na camada de repositório");
+        } else {
+            System.out.println("UPDATE - Recebendo o usuário na camada de repositório");
+        }
         System.out.println(usuario);
     }
     public void update(UserModel usuario){
+        if(usuario.getLogin()==null){
+            throw new CampoObrigatorioException("login");
+        }
+        if(usuario.getPassword()==null){
+            throw new CampoObrigatorioException("password");
+        }
         System.out.println("UPDATE - Recebendo o usuário na camada de repositório");
         System.out.println(usuario);
     }
