@@ -1,5 +1,6 @@
 package jojo.web.api.config;
 
+import jojo.web.api.model.User;
 import jojo.web.api.model.UserModel;
 import jojo.web.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class SecurityDatabaseService  implements UserDetailsService {
     private UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username) {
-        UserModel userEntity = userRepository.findByUsername(username);
+        User userEntity = userRepository.findByUsername(username);
         if (userEntity == null) {
             throw new UsernameNotFoundException(username);
         }
@@ -27,7 +28,7 @@ public class SecurityDatabaseService  implements UserDetailsService {
         userEntity.getRoles().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
         });
-        UserDetails user = new org.springframework.security.core.userdetails.User(userEntity.getLogin(),
+        UserDetails user = new org.springframework.security.core.userdetails.User(userEntity.getUsername(),
                 userEntity.getPassword(),
                 authorities);
         return user;
